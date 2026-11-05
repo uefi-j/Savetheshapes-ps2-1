@@ -1,19 +1,24 @@
 name: Build PS2 ELF
+
 on:
-push:
-workflow_dispatch:
+  push:
+  workflow_dispatch:
+
 jobs:
-build:
-runs-on: ubuntu-latest
-container: ps2dev/ps2dev:latest
-steps:
-name: Install tools
-run: apk add --no-cache git make build-base
-uses: actions/checkout@v4     
-name: Build
-run: make clean all19
-name: Upload ELF
-uses: actions/upload-artifact@v4
-with:          
-name: savetheshapes-elf
-path: savetheshapes.elf
+  build:
+    runs-on: ubuntu-latest
+    container: ps2dev/ps2dev:latest
+    steps:
+      - name: Install tools
+        run: apk add --no-cache git make build-base
+
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: make clean all
+
+      - name: Upload ELF
+        uses: actions/upload-artifact@v4
+        with:
+          name: savetheshapes-elf
+          path: savetheshapes.elf
